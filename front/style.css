@@ -1,0 +1,258 @@
+.wrapper {
+    width: 100%;
+    display: flex;
+    flex-flow: row wrap;
+    text-align: center;
+}
+
+.wrapper > * {
+    padding: 10px;
+    flex: 1 100%;
+}
+
+header {
+    display: flex;
+    height: 100px;
+    background-color: rgba(175, 221, 248, 0.8);
+    padding: 10px;
+    flex: 1 100%;
+}
+
+.main {
+    text-align: left;
+    order: 1;
+    display: flex;
+    flex-flow: row wrap;
+}
+
+.sidebar {
+    border-right: 1px solid #007FF5;
+    border-radius: 35px;
+}
+
+.users-list > li {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.avatar {
+    width: 50px;
+    height: 50px;
+    background: rgba(0, 0, 0, 0) url('images/browsers.png') -2px -1px no-repeat;
+    border-radius: 50%;
+    background-size: 270px;
+}
+
+.avatar.chrome {
+    background-position-x: -2px;
+}
+
+.avatar.edge {
+    background-position-x: -57px;
+}
+
+.avatar.firefox {
+    background-position-x: -110px;
+}
+
+.avatar.opera {
+    background-position-x: -164px;
+}
+
+.avatar.safari {
+    background-position-x: -218px;
+}
+
+.avatar.android {
+    border-image: url('images/browsers-mobile.png');
+}
+
+.avatar.apple {
+    border-image: url('images/browsers-mobile.png');
+}
+
+.file-icon {
+    width: 50px;
+    height: 50px;
+    background: rgba(0, 0, 0, 0) url('images/file-type.png') -458px -30px no-repeat;
+    background-size: 750px;
+}
+
+.file-icon.audio {
+    background-position: -387px -30px;
+}
+
+.file-icon.application {
+    background-position: -315px -30px;
+}
+
+.file-icon.video {
+    background-position: -600px -30px;
+}
+
+.file-icon.text {
+    background-position: -102px -101px;
+}
+
+.file-icon.image {
+    background-position: -458px -173px;
+}
+
+.file-icon.pdf {
+    background-position: -30px -244px;
+}
+
+.file-icon.png {
+    background-position: -458px -173px;
+}
+
+.file-icon.avi {
+    background-position: -529px -30px;
+}
+
+.file-icon.x-7z-compressed,
+.file-icon.gzip,
+.file-icon.zip {
+    background-position: -102px -30px;
+}
+
+.file-icon.rtf {
+    background-position: -173px -30px;
+}
+
+.file-icon.html {
+    background-position: -673px -101px;
+}
+
+.file-icon.css {
+    background-position: -173px -173px;
+}
+
+.file-icon.javascript {
+    background-position: -30px -173px;
+}
+
+.file-icon.json {
+    background-position: -386px -173px;
+}
+
+.file-icon.doc {
+    background-position: -530px -173px;
+}
+
+/*{"audio":["aac","midi","ogg","x-wav","webm"],"application":["x-abiword","octet-stream","vnd.amazon.ebook","octet-stream","x-bzip","x-bzip2","x-csh","msword","vnd.ms-fontobject","epub+zip","java-archive","javascript","json","vnd.apple.installer+xml","vnd.oasis.opendocument.presentation","vnd.oasis.opendocument.spreadsheet","vnd.oasis.opendocument.text","ogg","pdf","vnd.ms-powerpoint","x-rar-compressed","rtf","x-sh","x-shockwave-flash","x-tar","vnd.visio","xhtml+xml","vnd.ms-excel","xml","vnd.mozilla.xul+xml","zip","x-7z-compressed"],"video":["x-msvideo","mpeg","ogg","vnd.dlna.mpeg-tts","webm","3gpp\naudio","3gpp2\naudio"],"text":["css","csv","html","calendar"],"image":["gif","x-icon","jpeg","png","svg+xml","tiff","webp"],"font":["otf","ttf","woff","woff2"]}*/
+
+.users-list .info {
+    padding-left: 10px;
+}
+
+.users-list .info .ip {
+    font-weight: bold;
+}
+
+.dropFiles {
+    flex-grow: 5;
+    display: flex;
+    flex-direction: column;
+    padding-right: 10px;
+}
+
+.dropBox {
+    height: 100%;
+    border: 2px dashed #007FF5;
+    border-radius: 5px;
+    padding: 10px 30px;
+    background-color: rgba(0, 126, 245, 0.18);
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.dropBox.over {
+    border: 2px solid #007FF5;
+    background-color: #fff;
+    opacity: 0.5;
+}
+
+.fileBox {
+    background-color: #fff;
+    color: #000;
+    margin-top: 10px;
+}
+
+.fileBox .fileList li {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 5px 20px;
+    margin-bottom: 5px;
+    border-radius: 3px;
+    cursor: pointer;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+    transition: all 0.3s cubic-bezier(.25,.8,.25,1);
+}
+
+.fileBox .fileList li:hover {
+    box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+}
+
+.fileList .info {
+    padding-left: 10px;
+    width: 100%;
+}
+
+.fileList .progressbar {
+    width: 100%;
+    height: 2px;
+    background: #ccc;
+    position: relative;
+    margin-top: 5px;
+}
+
+.fileList .progressbar .progress-percent {
+    width: 10%;
+    height: 2px;
+    background: #007FF5;
+    position: absolute;
+    left: 0;
+    top: 0;
+    transition: all 0.5s;
+}
+
+.preview {
+    flex-grow: 1;
+    border: 3px solid #007FF5;
+    position: relative;
+}
+
+.preview iframe {
+    width: 100%;
+    height: 100%;
+}
+
+#upload {
+    width: 150px;
+    height: 150px;
+}
+
+@media all and (min-width: 600px) {
+    .sidebar {
+        flex: 1 auto;
+    }
+}
+
+@media all and (min-width: 800px) {
+    .main {
+        flex: 5 0;
+        order: 2;
+    }
+
+    .sidebar {
+        order: 1;
+    }
+}

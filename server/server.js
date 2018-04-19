@@ -15,15 +15,22 @@ const server = require(isUseHTTPs ? 'https' : 'http');
 
 
 function serverHandler(request, response) {
+
+  let ip = request.headers['x-forwarded-for'] ||
+    request.connection.remoteAddress ||
+    request.socket.remoteAddress ||
+    (request.connection.socket ? request.connection.socket.remoteAddress : null);
+  // console.log(ip);
+
   function sendResponse(statusCode, answer, contentType = 'text/plain') {
     response.writeHead(statusCode, {'Content-Type': contentType});
-    response.write(answer);
+    response.write(answer, 'binary');
     response.end();
   }
 
   try {
     let uri = url.parse(request.url).pathname,
-      filename = path.join(path.resolve(__dirname), '../', uri);
+      filename = path.join(path.resolve(__dirname), '../front/', uri);
 
     if (filename && filename.search(/server.js|signalingServer.js/g) !== -1) return sendResponse(404, '404 Not Found: ' + path.join('/', uri) + '\n');
     try {
@@ -34,7 +41,7 @@ function serverHandler(request, response) {
     }
 
     const fnLower = path.extname(filename).toLowerCase();
-    let contentType = (fnLower === '.html' ? 'text/html' : fnLower === '.css' ? 'text/css' : fnLower === '.png' ? 'image/png' : 'text/plain');
+    let contentType = (fnLower === '.html' ? 'text/html' : fnLower === '.css' ? 'text/css' : (fnLower === '.png' || fnLower === '.jpg') ? 'image/png' : 'text/plain');
 
     fs.readFile(filename, 'binary', (err, file) =>
       err ? sendResponse(500, '404 Not Found: ' + path.join('/', uri) + '\n') : sendResponse(200, file, contentType));
@@ -70,9 +77,7 @@ function runServer() {
 
   app = app.listen(port, process.env.IP || '0.0.0.0', error => {
     const addr = app.address();
-    if (addr.address === '0.0.0.0') {
-      addr.address = 'localhost';
-    }
+    if (addr.address === '0.0.0.0') addr.address = 'localhost';
 
     var domainURL = (isUseHTTPs ? 'https' : 'http') + '://' + addr.address + ':' + addr.port + '/';
 
