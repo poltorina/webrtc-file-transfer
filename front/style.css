@@ -18,6 +18,14 @@ header {
     flex: 1 100%;
 }
 
+.green {
+    color: rgba(25, 190, 55, 1);
+}
+
+.blue {
+    color: rgba(36, 136, 255, 1);
+}
+
 .main {
     text-align: left;
     order: 1;
@@ -28,6 +36,7 @@ header {
 .sidebar {
     border-right: 1px solid #007FF5;
     border-radius: 35px;
+    max-width: 100%;
 }
 
 .users-list > li {
@@ -35,6 +44,58 @@ header {
     flex-direction: row;
     justify-content: flex-start;
     align-items: center;
+    position: relative;
+    text-align: left;
+    box-shadow: 0 3px 6px rgba(0, 127, 245, 0.16), 0 3px 6px rgba(0, 127, 245, 0.23);
+    transition: all 0.3s cubic-bezier(.25,.8,.25,1);
+}
+
+.users-list > li {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    position: relative;
+    text-align: left;
+    padding: 5px;
+    margin-bottom: 10px;
+    box-shadow: 0 3px 6px rgba(0, 127, 245, 0.16), 0 3px 6px rgba(0, 127, 245, 0.23), 0 -1px 5px 0px rgba(0, 127, 245, 0.23);
+    transition: all 0.3s cubic-bezier(.25,.8,.25,1);
+}
+
+.users-list > li.isMe {
+    background-color: rgba(82, 171, 255, 0.22);
+    box-shadow: 0 14px 28px rgba(0, 127, 245, 0.25), 0 10px 10px rgba(0, 127, 245, 0.22);
+}
+
+.plugRight {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    right: 10px;
+    cursor: pointer;
+    top: 17px;
+}
+
+.plugRight svg {
+    transition: all 0.3s;
+}
+
+.plugRight svg:hover {
+    -webkit-filter: drop-shadow(2px 3px 2px rgba(0,0,0,0.5));
+    filter: drop-shadow(2px 3px 2px rgba(0,0,0,0.5));
+}
+
+.users-list > li.isMe input {
+    position: absolute;
+    top: 7px;
+    font-weight: bold;
+    font-size: 16px;
+    left: 60px;
+    background: transparent;
+    font-family: sans-serif;
+    border: 0;
+    width: calc(100% - 105px);
 }
 
 .avatar {
@@ -145,11 +206,20 @@ header {
 /*{"audio":["aac","midi","ogg","x-wav","webm"],"application":["x-abiword","octet-stream","vnd.amazon.ebook","octet-stream","x-bzip","x-bzip2","x-csh","msword","vnd.ms-fontobject","epub+zip","java-archive","javascript","json","vnd.apple.installer+xml","vnd.oasis.opendocument.presentation","vnd.oasis.opendocument.spreadsheet","vnd.oasis.opendocument.text","ogg","pdf","vnd.ms-powerpoint","x-rar-compressed","rtf","x-sh","x-shockwave-flash","x-tar","vnd.visio","xhtml+xml","vnd.ms-excel","xml","vnd.mozilla.xul+xml","zip","x-7z-compressed"],"video":["x-msvideo","mpeg","ogg","vnd.dlna.mpeg-tts","webm","3gpp\naudio","3gpp2\naudio"],"text":["css","csv","html","calendar"],"image":["gif","x-icon","jpeg","png","svg+xml","tiff","webp"],"font":["otf","ttf","woff","woff2"]}*/
 
 .users-list .info {
-    padding-left: 10px;
+    padding: 0 30px 0 10px;
+    width: calc(100% - 50px);
 }
 
 .users-list .info .ip {
     font-weight: bold;
+    font-family: sans-serif;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.users-list .info .last-action {
+    height: 16px;
 }
 
 .dropFiles {
@@ -184,7 +254,10 @@ header {
     margin-top: 10px;
 }
 
-.fileBox .fileList li {
+.fileBox .fileList li .fileItem {
+    position: relative;
+    color: #000;
+    text-decoration: none;
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
@@ -193,6 +266,10 @@ header {
     margin-bottom: 5px;
     border-radius: 3px;
     cursor: pointer;
+}
+
+.fileBox .fileList li {
+    position: relative;
     box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
     transition: all 0.3s cubic-bezier(.25,.8,.25,1);
 }
@@ -212,10 +289,12 @@ header {
     background: #ccc;
     position: relative;
     margin-top: 5px;
+    transition: all 0.5s;
 }
 
 .fileList .progressbar .progress-percent {
-    width: 10%;
+    width: 0;
+    max-width: 100%;
     height: 2px;
     background: #007FF5;
     position: absolute;
@@ -238,6 +317,20 @@ header {
 #upload {
     width: 150px;
     height: 150px;
+}
+
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background-color: rgba(0, 0, 0, 0.8);
+    display: none;
+}
+
+.overlay.over {
+    display: block;
 }
 
 @media all and (min-width: 600px) {

@@ -1,5 +1,4 @@
 .idea/
 node_modules/
 trash.html
-signalingServer.js
-server/fake-keys/
+server/

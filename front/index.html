@@ -3,49 +3,18 @@
 <head>
   <meta charset="UTF-8">
   <title>WebRTC File Sharing</title>
+  <link rel="shortcut icon" href="images/favicon.png" type="image/png">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="reset.css">
   <link rel="stylesheet" href="style.css">
+  <script src="/socket.io/socket.io.js"></script>
 </head>
 <body>
+<div id="number-of-users">0</div>
 <div class="wrapper">
   <header class="header"></header>
   <aside class="sidebar">
     <ul class="users-list">
-      <li>
-        <div class="avatar"></div>
-        <div class="info">
-          <div class="ip">10.0.0.1</div>
-          <div class="last-action">file.name</div>
-        </div>
-      </li>
-      <li>
-        <div class="avatar safari"></div>
-        <div class="info">
-          <div class="ip">10.0.0.1</div>
-          <div class="last-action">file.name</div>
-        </div>
-      </li>
-      <li>
-        <div class="avatar firefox"></div>
-        <div class="info">
-          <div class="ip">10.0.0.1</div>
-          <div class="last-action">file.name</div>
-        </div>
-      </li>
-      <li>
-        <div class="avatar edge"></div>
-        <div class="info">
-          <div class="ip">10.0.0.1</div>
-          <div class="last-action">file.name</div>
-        </div>
-      </li>
-      <li>
-        <div class="avatar opera"></div>
-        <div class="info">
-          <div class="ip">10.0.0.1</div>
-          <div class="last-action">file.name</div>
-        </div>
-      </li>
     </ul>
   </aside>
   <article class="main">
@@ -57,25 +26,17 @@
       </div>
       <div class="fileBox">
         <ul class="fileList">
-          <li>
-            <div class="file-icon ${file.type.split('/').join(' ')}"></div>
-            <div class="info">
-              <div class="name">name</div>
-              <div class="size">54 KB</div>
-              <div class="progressbar">
-                <span class="progress-percent"></span>
-              </div>
-            </div>
-          </li>
         </ul>
       </div>
     </div>
     <div class="preview">
-      <iframe src="" style="display: none;" frameborder="0"></iframe>
+      <iframe src="" id="frame-preview" style="display: none;" frameborder="0"></iframe>
     </div>
   </article>
 </div>
 <div class="overlay"></div>
+<script type="application/javascript" src="FileBufferReader.js"></script>
+<script type="application/javascript" src="RTCMultiConnection.js"></script>
 <script type="application/javascript" src="script.js"></script>
 </body>
 </html>

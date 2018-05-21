@@ -1,6 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 const url = require('url');
+const colors = require('colors');
 
 const options = {
   key: fs.readFileSync(path.join(__dirname, 'fake-keys', 'privatekey.pem')),
@@ -13,13 +14,13 @@ let port = process.env.PORT || 9001; //443
 process.argv.forEach(val => {if (!!val && val === '--ssl') isUseHTTPs = true;});
 const server = require(isUseHTTPs ? 'https' : 'http');
 
-
 function serverHandler(request, response) {
 
   let ip = request.headers['x-forwarded-for'] ||
     request.connection.remoteAddress ||
     request.socket.remoteAddress ||
     (request.connection.socket ? request.connection.socket.remoteAddress : null);
+
   // console.log(ip);
 
   function sendResponse(statusCode, answer, contentType = 'text/plain') {
@@ -53,25 +54,11 @@ function serverHandler(request, response) {
 
 let app = isUseHTTPs ? server.createServer(options, serverHandler) : server.createServer(serverHandler);
 
-function cmd_exec(cmd, args, cb_stdout, cb_end) {
-  var spawn = require('child_process').spawn,
-    child = spawn(cmd, args),
-    me = this;
-  me.exit = 0;
-  me.stdout = "";
-  child.stdout.on('data', data => {
-    cb_stdout(me, data)
-  });
-  child.stdout.on('end', () => {
-    cb_end(me)
-  });
-}
-
 function runServer() {
   app.on('error', err => {
     if (err.code === 'EADDRINUSE') {
       const socketURL = (isUseHTTPs ? 'https' : 'http') + '://' + err.address + ':' + err.port + '/';
-      console.log('\x1b[31m%s\x1b[0m ', `Unable to listen on port: ${err.port}\n ${socketURL} is already in use. Please kill below processes using "kill -9 PID".\n\n`);
+      console.log(`Unable to listen on port: ${err.port}\n ${socketURL} is already in use. Please kill below processes using "kill -9 PID".\n\n`.bgRed);
     }
   });
 
@@ -82,7 +69,29 @@ function runServer() {
     var domainURL = (isUseHTTPs ? 'https' : 'http') + '://' + addr.address + ':' + addr.port + '/';
 
     console.log('------------------------------\nsocket.io is listening at:');
-    console.log('\x1b[32m%s\x1b[0m ', `\t${domainURL} \n------------------------------`);
+    console.log(`\t${domainURL} \n------------------------------`.green);
+  });
+
+
+  require('./signalingServer.js')(app, socket => {
+    try {
+      const params = socket.handshake.query;
+      if (!params.socketCustomEvent) params.socketCustomEvent = 'custom-message';
+
+      socket.on(params.socketCustomEvent, message => {
+        console.log(`message ${JSON.stringify(message)}`.yellow);
+
+        try {
+          console.log(`socket.broadcast ${socket.broadcast}\n\n`);
+          socket.broadcast.emit(params.socketCustomEvent, message);
+        } catch (e) {
+          console.log(`Error: ${e}`.bgRed);
+        }
+      });
+    } catch (e) {
+      console.log(`Error: ${e}`.bgRed);
+    }
   });
 }
+
 runServer();
